@@ -58,7 +58,10 @@ class App:
         self.asientos = Entry(self.ventana)
         self.asientos.pack(pady=2)
 
-        Button(self.ventana, text="Agregar", command=self.insertar_coche_controller).pack(pady=10)
+        Button(self.ventana, text="Agregar", command=lambda: 
+               {self.insertar_coche_controller(),
+                self.insertar_coche_view()
+                }).pack(pady=10)
         Button(self.ventana, text="Regresar", command=self.menu_acciones).pack(pady=5)
 
     def eliminar_coche_view(self):
@@ -68,7 +71,10 @@ class App:
         self.idBorrar.focus()
         self.idBorrar.pack(pady=5)
 
-        Button(self.ventana, text="Borrar", command=self.eliminar_coche_controller).pack(pady=5)
+        Button(self.ventana, text="Borrar", command=lambda: 
+               {self.eliminar_coche_controller(),
+                self.eliminar_coche_view()
+                }).pack(pady=5)
         Button(self.ventana, text="::Regresar::", command=self.menu_acciones).pack(pady=5)
 
     def consultar_coche_view(self):
@@ -111,7 +117,10 @@ class App:
         self.asientos = Entry(self.ventana)
         self.asientos.pack(pady=2)
 
-        Button(self.ventana, text="Modificar", command=self.modificar_coche_controller).pack(pady=10)
+        Button(self.ventana, text="Modificar", command=lambda: 
+               {self.modificar_coche_controller(),
+                self.modificar_coche_view()
+                }).pack(pady=10)
         Button(self.ventana, text="Regresar", command=self.menu_acciones).pack(pady=5)
 
     def respuesta_sql(self, respuesta):
