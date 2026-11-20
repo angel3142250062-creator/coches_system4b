@@ -1,4 +1,4 @@
-from Proyecto_estudiantes.coches_system.coches.conexionBD import conexion, cursor
+from coches import conexion, cursor
 class CochesBD:
     def __init__(self,marca,color,modelo,velocidad,potencia,asientos):
         self._marca=marca
@@ -39,3 +39,4 @@ class CochesBD:
         except:
             return False
 
+    
