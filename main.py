@@ -222,11 +222,18 @@ class App:
             messagebox.showinfo(title="..¡Registro Encontrado!..",
                             message=f"...El registro fue encontrado con éxito, puedes {tipo_accion}...")
             self.cambiar_estado_btn(True, tipo_accion)
+            if tipo_accion == "modificar":
+                self.var_marca.set(coche1[0][1])
+                self.var_color.set(coche1[0][2])
+                self.var_modelo.set(coche1[0][3])
+                self.var_velocidad.set(coche1[0][4])
+                self.var_potencia.set(coche1[0][5])
+                self.var_asientos.set(coche1[0][6])
         else:
             messagebox.showerror(title="...¡Verifica por favor!...",
                              message=f"...¡El registro no fue encontrado, no es posible {tipo_accion}!...")
-            self.cambiar_estado_btn(False, tipo_accion)  # <-- Agrega 4 espacios aquí para meterlo en el else 
-
+            self.cambiar_estado_btn(False, tipo_accion)
+            
 if __name__ == "__main__":
     ventana = Tk()
     app = App(ventana)
