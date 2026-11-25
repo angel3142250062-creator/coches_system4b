@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Entry, Button, messagebox, StringVar, Menu, Frame
+from tkinter import Tk, Label, Entry, Button, messagebox, StringVar, Menu, Frame, ttk
 from coches import coches
 
 class App:
@@ -116,8 +116,20 @@ class App:
     def consultar_coche_view(self):
         self.borrarPantalla()
         Label(self.ventana, text="...::: Consultar Coches :::...").pack(pady=10)
-        filas = self.consultar_coche_controller()
-        Label(self.ventana, text=filas, justify="left").pack(pady=5)
+        
+        # Tabla
+        self.tree =ttk.Treeview(self.ventana, columns=("ID", "Marca", "Color", "Modelo","Velocidad","Potencia","Asientos"), show="headings")
+        self.tree.heading("ID", text="ID")
+        self.tree.heading("Marca", text="Marca")
+        self.tree.heading("Color", text="Color")
+        self.tree.heading("Modelo", text="Modelo")
+        self.tree.heading("Velocidad", text="Velocidad")
+        self.tree.heading("Potencia", text="Potencia")
+        self.tree.heading("Asientos", text="Asientos")
+        self.tree.pack(fill="both", expand=False)
+
+        self.consultar_coche_controller()
+
         Button(self.ventana, text="::Regresar::", command=self.menu_acciones).pack(pady=10)
 
     def modificar_coche_view(self):
@@ -227,14 +239,10 @@ class App:
         self.respuesta_sql(respuesta)
 
     def consultar_coche_controller(self):
-        registro = coches.Coches.consultar()
-        filas = ""
-        if len(registro) > 0:
-            for num, fila in enumerate(registro, 1):
-                filas += f"Coche #{num} | ID: {fila[0]} | Marca: {fila[1]} | Color: {fila[2]} | Modelo: {fila[3]} | Vel: {fila[4]} | Pot: {fila[5]} | Asientos: {fila[6]}\n"
-        else:
-            filas = "...¡No se encontró información en la BD!..."
-        return filas
+        for row in self.tree.get_children():
+            self.tree.delete(row)
+        for row in coches.Coches.consultar():
+            self.tree.insert("", "end", values=row)
 
     def modificar_coche_controller(self):
         id_coche = self.id.get()
