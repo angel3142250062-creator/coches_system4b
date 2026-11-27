@@ -2,7 +2,7 @@ import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from conexionBD import conexion, cursor
-class Coches:
+class CochesModel:
     def __init__(self,marca,color,modelo,velocidad,potencia,asientos ):
         self._marca = marca
         self._color = color
@@ -70,14 +70,15 @@ class Coches:
         except Exception as e: 
             print(f"Ocurrió un error: {e}")
             return []
-    staticmethod
+    @staticmethod
     def eliminar(id):
         try: 
-            cursor.execute("delete from coches where id=%s",(id,))
+            cursor.execute("delete from coches where id=%s", (id,))
             conexion.commit()
-            return True
-        except: 
-            return False 
+            return cursor.rowcount > 0  
+        except Exception as e:
+            print(f"Ocurrió un error: {e}")
+            return False
     def actualizar(self,id):
         try:
 
@@ -89,4 +90,11 @@ class Coches:
             print(f"Ocurrió un error: {e}")
             return False
 
+    @staticmethod
+    def buscar(id):
+        try:
+            cursor.execute("select * from coches where id=%s",(id,))
+            return cursor.fetchall()
+        except:
+            return []
 
